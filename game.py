@@ -111,7 +111,7 @@ def load_game():
 
 def save_game():
     """Save a game from file."""
-    file_name = input("Filename: ")
+    file_name = raw_input("Filename: ")
     print "Saving game to file {0}".format(file_name)
     dump(game, file_name)
 
@@ -123,6 +123,33 @@ def battle():
     """Battle!"""
     scene = game['scene']
     print "You are now about to battle {0}".format(scene['boss'])
+
+def help():
+    """Print help!"""
+    print """
+      inventory: prints current inventory
+      game: prints current game status
+      quit: save and quits
+    """
+
+def print_inventory():
+  print 'inventory: '
+
+def print_game_status():
+  print 'game status: '
+
+def nothing():
+  """do nothing"""
+
+def do_menu_action(action):
+    """Execute menu action!"""
+    return {
+      'inventory': print_inventory,
+      'game': print_game_status,
+      'quit': save_game,
+      }.get(action, nothing)
+      
+
 
 def display_scene():
     """Display a scene."""
@@ -140,10 +167,14 @@ def display_scene():
         for option in scene['choices']:
           print '{0}: {1}'.format(option['scene'], option['description'])
         answer = raw_input('How will you proceed? \n')
-        if int(answer) in map((lambda x: x['scene']), scene['choices']):
-          answered = True
-        else:
-          print "Invalid answer. "
+        try:
+          if int(answer) in map((lambda x: x['scene']), scene['choices']):
+            answered = True
+          else:
+            print "Invalid answer. "
+        except ValueError:
+          do_menu_action(answer)()
+
     
 
 def is_finished():
