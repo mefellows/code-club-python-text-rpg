@@ -1,1 +1,1 @@
-figlet=0.7.5
+pyfiglet==0.7.5
