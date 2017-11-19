@@ -311,7 +311,7 @@ def battle():
 
             elif int(answer) in map((lambda x: x['id']), inventory):
                 _, move = find_inventory_item_by_id(int(answer))
-                print 'You chose {0} and inflict {1} damage'.format(move['name'], move['damage'])
+                print 'You chose {0} and inflict {1} damage'.format(move['name'], move)
 
                 # Apply move (to self or boss)
                 # Decrease inventory use by 1
