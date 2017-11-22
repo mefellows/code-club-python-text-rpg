@@ -4,4 +4,39 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+Enum	../game.py	/^from enum import Enum$/;"	kind:namespace	line:6
+INFINITY	../game.py	/^INFINITY = float("inf")$/;"	kind:variable	line:46
+INVENTORY_POTION	../game.py	/^INVENTORY_POTION = {$/;"	kind:variable	line:49
+INVENTORY_SWORD	../game.py	/^INVENTORY_SWORD = {$/;"	kind:variable	line:57
+SCENE_TYPE_BATTLE	../game.py	/^SCENE_TYPE_BATTLE = 1$/;"	kind:variable	line:67
+SCENE_TYPE_SCENE	../game.py	/^SCENE_TYPE_SCENE = 0$/;"	kind:variable	line:66
+am_i_dead	../game.py	/^def am_i_dead():$/;"	kind:function	line:274
+authors	../game.py	/^authors = "Skary Sneks"$/;"	kind:variable	line:31
+banner	../game.py	/^def banner(text, ch='=', length=78):$/;"	kind:function	line:24
+battle	../game.py	/^def battle():$/;"	kind:function	line:284
+battle_boss	../game.py	/^def battle_boss(move):$/;"	kind:function	line:255
+die	../game.py	/^def die():$/;"	kind:function	line:241
+display_scene	../game.py	/^def display_scene():$/;"	kind:function	line:344
+do_menu_action	../game.py	/^def do_menu_action(action):$/;"	kind:function	line:187
+dump	../game.py	/^from pickle import load, dump$/;"	kind:namespace	line:5
+figlet_format	../game.py	/^from pyfiglet import figlet_format$/;"	kind:namespace	line:4
+find_inventory_item_by_id	../game.py	/^def find_inventory_item_by_id(item):$/;"	kind:function	line:247
+game	../game.py	/^game = {$/;"	kind:variable	line:140
 game.py	../game.py	1;"	kind:file	line:1
+game_over	../game.py	/^def game_over(reason='You are dead'):$/;"	kind:function	line:279
+help	../game.py	/^def help():$/;"	kind:function	line:156
+is_boss_dead	../game.py	/^def is_boss_dead():$/;"	kind:function	line:269
+is_finished	../game.py	/^def is_finished():$/;"	kind:function	line:202
+load	../game.py	/^from pickle import load, dump$/;"	kind:namespace	line:5
+load_game	../game.py	/^def load_game():$/;"	kind:function	line:224
+load_scene	../game.py	/^def load_scene(scene):$/;"	kind:function	line:197
+print_game_status	../game.py	/^def print_game_status():$/;"	kind:function	line:180
+print_inventory	../game.py	/^def print_inventory():$/;"	kind:function	line:170
+save_game	../game.py	/^def save_game():$/;"	kind:function	line:233
+scene_is_battle	../game.py	/^def scene_is_battle(scene):$/;"	kind:function	line:207
+scenes	../game.py	/^scenes = [$/;"	kind:variable	line:69
+signal	../game.py	/^import signal$/;"	kind:namespace	line:7
+signal_handler	../game.py	/^def signal_handler(signal, frame):$/;"	kind:function	line:11
+start_game	../game.py	/^def start_game():$/;"	kind:function	line:212
+sys	../game.py	/^import sys$/;"	kind:namespace	line:8
+title	../game.py	/^title = "Stray realms, the final hour"$/;"	kind:variable	line:30

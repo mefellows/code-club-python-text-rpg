@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from pyfiglet import figlet_format
-from pickle import load, dump
+#from pyfiglet import figlet_format
+#from pickle import load, dump
 from enum import Enum
 import signal
 import sys
@@ -10,7 +10,7 @@ import sys
 
 def signal_handler(signal, frame):
     """Handle a control-c."""
-    print "\n\nExiting - hope you enjoyed playing :)\n"
+    print("\n\nExiting - hope you enjoyed playing :)\n")
     sys.exit(0)
 
 
@@ -34,8 +34,9 @@ authors = "Skary Sneks"
 print('')
 print('')
 print('Welcome to:')
-print(figlet_format(title, font='slant'))
-print banner('by: {0}, 2017'.format(authors))
+#print(figlet_format(title, font='slant'))
+print (title)
+print(banner('by: {0}, 2017'.format(authors)))
 print('')
 
 #############################################################################
@@ -155,7 +156,7 @@ game = {
 
 def help():
     """Print help!"""
-    print '''
+    print('''
     #################################################
     # HELP! you can run these commands at any time: #
     #                                               #
@@ -164,24 +165,24 @@ def help():
     #    quit:      save and quits                  #
     #                                               #
     #################################################
-    '''
+    ''')
 
 
 def print_inventory():
-    print banner('inventory: ')
+    print(banner('inventory: '))
     for i in game['inventory']:
-        print '{0}: (id: {1})'.format(i['name'], i['id'])
-        print "\tRemaining use: {0}".format(i['use'])
-        print "\tDamage: {0}".format(i['damage'])
-        print "\tHealth: {0}".format(i['health'])
-    print '\n'
+        print('{0}: (id: {1})'.format(i['name'], i['id']))
+        print("\tRemaining use: {0}".format(i['use']))
+        print("\tDamage: {0}".format(i['damage']))
+        print("\tHealth: {0}".format(i['health']))
+    print('\n')
 
 
 def print_game_status():
-    print banner('game status: ')
-    print 'Score: {0}: '.format(game['score'])
-    print 'Health: {0}: '.format(game['health'])
-    print '\n'
+    print(banner('game status: '))
+    print('Score: {0}: '.format(game['score']))
+    print('Health: {0}: '.format(game['health']))
+    print('\n')
 
 
 def do_menu_action(action):
@@ -211,20 +212,20 @@ def scene_is_battle(scene):
 
 def start_game():
     """Starts the game!"""
-    new_or_existing = raw_input(
+    new_or_existing = input(
         '''Would you like to start a new game (n) or open an existing (o)? ''')
     load_scene(0)
 
     if new_or_existing == 'o':
         load_game()
 
-    print 'Starting game from scene {0}'.format(game["scene"]["name"])
+    print('Starting game from scene {0}'.format(game["scene"]["name"]))
 
 
 def load_game():
     """Load a game from file."""
-    file_name = raw_input("Enter file to open: ")
-    print "Reading game from file {0}".format(file_name)
+    file_name = input("Enter file to open: ")
+    print("Reading game from file {0}".format(file_name))
     with open(file_name, 'r') as f:
         global game
         game = load(f)
@@ -232,8 +233,8 @@ def load_game():
 
 def save_game():
     """Save a game from file."""
-    file_name = raw_input("Filename: ")
-    print "Saving game to file {0}".format(file_name)
+    file_name = input("Filename: ")
+    print("Saving game to file {0}".format(file_name))
     with open(file_name, 'w') as f:
         dump(game, f)
 
@@ -263,7 +264,7 @@ def battle_boss(move):
 
     if game['inventory'][i]['use'] <= 0:
         del game['inventory'][i]
-        print 'You have run out of {0} '.format(move['name'])
+        print('You have run out of {0} '.format(move['name']))
 
 
 def is_boss_dead():
@@ -278,7 +279,7 @@ def am_i_dead():
 
 def game_over(reason='You are dead'):
     """Game over!"""
-    print "{0} - GAME OVER!".format(reason)
+    print("{0} - GAME OVER!".format(reason))
 
 
 def battle():
@@ -287,7 +288,8 @@ def battle():
     boss = scene['boss']
     boss_damage = scene['damage']
 
-    print "You are now about to battle {0}, who fights with damage {1}.".format(scene['boss'], boss_damage)
+    print("You are now about to battle {0}, who fights with damage {1}.".format(
+        scene['boss'], boss_damage))
 
     # Logic
     #   - Turn based game, player gets to move first
@@ -299,19 +301,20 @@ def battle():
         boss_health = scene['health']
         inventory = game['inventory']
 
-        print '{0} has health:  {1}'.format(boss, boss_health)
-        print 'You have health: {0}\n'.format(game['health'])
-        print 'You have the following moves available: \n'
+        print('{0} has health:  {1}'.format(boss, boss_health))
+        print('You have health: {0}\n'.format(game['health']))
+        print('You have the following moves available: \n')
         print_inventory()
 
-        answer = raw_input('Select your move (by id): ')
+        answer = input('Select your move (by id): ')
         try:
             if len(inventory) <= 0:
                 game_over('You have run out of moves!')
 
             elif int(answer) in map((lambda x: x['id']), inventory):
                 _, move = find_inventory_item_by_id(int(answer))
-                print 'You chose {0} and inflict {1} damage'.format(move['name'], move)
+                print('You chose {0} and inflict {1} damage'.format(
+                    move['name'], move))
 
                 # Apply move (to self or boss)
                 # Decrease inventory use by 1
@@ -324,19 +327,20 @@ def battle():
 
                 # Check - is the opponent still alive?
                 if is_boss_dead():
-                    print 'You defeated {0}!'.format(boss)
+                    print('You defeated {0}!'.format(boss))
                     # Go to the post-battle scene
                     return game['scene']['choices'][0]['scene']
                 else:
                     # Boss applies move against you!
-                    print '{0} {1} and inflicts {2} damage'.format(boss, game['scene']['weapon'], game['scene']['damage'])
+                    print('{0} {1} and inflicts {2} damage'.format(
+                        boss, game['scene']['weapon'], game['scene']['damage']))
                     game['health'] -= game['scene']['damage']
                     if am_i_dead():
                         battling = False
                         game_over()
 
             else:
-                print "Invalid answer. "
+                print("Invalid answer. ")
         except ValueError:
             do_menu_action(answer)
 
@@ -344,23 +348,24 @@ def battle():
 def display_scene():
     """Display a scene."""
     scene = game['scene']
-    print banner('\n\nYou make your way to {0} ...\n'.format(scene['name']))
+    print(banner('\n\nYou make your way to {0} ...\n'.format(scene['name'])))
 
     if scene_is_battle(scene):
         load_scene(battle())
     else:
-        print scene['description'] + '\n\n'
+        print(scene['description'] + '\n\n')
         answered = False
 
         while answered is False:
             for option in scene['choices']:
-                print '{0}: {1}'.format(option['scene'], option['description'])
-            answer = raw_input('\nHow will you proceed? ')
+                print('{0}: {1}'.format(
+                    option['scene'], option['description']))
+            answer = input('\nHow will you proceed? ')
             try:
                 if int(answer) in map((lambda x: x['scene']), scene['choices']):
                     answered = True
                 else:
-                    print "Invalid answer. "
+                    print("Invalid answer. ")
             except ValueError:
                 do_menu_action(answer)
 
@@ -377,7 +382,7 @@ start_game()
 # 2. Display scene
 while True:
     if is_finished is True:
-        print "Game Over!"
+        print("Game Over!")
         exit(0)
 
     display_scene()
