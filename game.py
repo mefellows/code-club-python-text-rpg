@@ -1,9 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#from pyfiglet import figlet_format
-#from pickle import load, dump
-from enum import Enum
 import signal
 import sys
 
@@ -14,7 +11,8 @@ def signal_handler(signal, frame):
     sys.exit(0)
 
 
-signal.signal(signal.SIGINT, signal_handler)
+# Uncomment this for CLI use
+#signal.signal(signal.SIGINT, signal_handler)
 
 #############################################################################
 #                              Intro Banner
@@ -212,7 +210,7 @@ def scene_is_battle(scene):
 
 def start_game():
     """Starts the game!"""
-    new_or_existing = input(
+    new_or_existing = raw_input(
         '''Would you like to start a new game (n) or open an existing (o)? ''')
     load_scene(0)
 
@@ -224,7 +222,7 @@ def start_game():
 
 def load_game():
     """Load a game from file."""
-    file_name = input("Enter file to open: ")
+    file_name = raw_input("Enter file to open: ")
     print("Reading game from file {0}".format(file_name))
     with open(file_name, 'r') as f:
         global game
@@ -233,7 +231,7 @@ def load_game():
 
 def save_game():
     """Save a game from file."""
-    file_name = input("Filename: ")
+    file_name = raw_input("Filename: ")
     print("Saving game to file {0}".format(file_name))
     with open(file_name, 'w') as f:
         dump(game, f)
@@ -306,7 +304,7 @@ def battle():
         print('You have the following moves available: \n')
         print_inventory()
 
-        answer = input('Select your move (by id): ')
+        answer = raw_input('Select your move (by id): ')
         try:
             if len(inventory) <= 0:
                 game_over('You have run out of moves!')
@@ -360,7 +358,7 @@ def display_scene():
             for option in scene['choices']:
                 print('{0}: {1}'.format(
                     option['scene'], option['description']))
-            answer = input('\nHow will you proceed? ')
+            answer = raw_input('\nHow will you proceed? ')
             try:
                 if int(answer) in map((lambda x: x['scene']), scene['choices']):
                     answered = True
