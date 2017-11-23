@@ -3,7 +3,11 @@
 
 import signal
 import sys
+import scenes as s
+import inventory as i
+import os 
 
+clear = lambda: os.system('cls')
 
 def signal_handler(signal, frame):
     """Handle a control-c."""
@@ -21,8 +25,7 @@ def signal_handler(signal, frame):
 
 def banner(text, ch='=', length=78):
     spaced_text = ' %s ' % text
-    banner = spaced_text.center(length, ch)
-    return banner
+    return spaced_text.center(length, ch)
 
 
 title = '''
@@ -50,111 +53,18 @@ print(banner('by: {0}, 2017'.format(authors)))
 print('')
 
 #############################################################################
-#                      Game Constants: Weapons, Scenes etc.
+#                      Game Constants: Weapons, s.Scenes etc.
 #############################################################################
 
 # Game Constants
-INFINITY = float("inf")
-
-# Possible inventory items
-INVENTORY_POTION = {
-    "id": 0,
-    "name": "Magic potion",
-    "damage": 0,
-    "health": 25,
-    "use": 5
-}
-
-INVENTORY_SWORD = {
-    "id": 1,
-    "name": "Enchanted sword",
-    "damage": 2,
-    "health": 0,
-    "use": INFINITY
-}
-
-# Scene types
-SCENE_TYPE_SCENE = 0
-SCENE_TYPE_BATTLE = 1
-
-scenes = [
-    {
-        "name": "some amazing scene",
-        "type": SCENE_TYPE_SCENE,
-        "description": """some amazing description of this scene, this will be elaborated on
-                      when the scene shows up, and may contain ASCII pictures!
-                      """,
-        "choices": [
-            {
-                "scene": 1,
-                "description": "Head North to the castle"
-            }
-        ]
-    },
-    {
-        "name": "the castle",
-        "type": SCENE_TYPE_SCENE,
-        "description": '''
-                              o
-                          _---|         _ _ _ _ _
-                       o   ---|     o   ]-I-I-I-[
-      _ _ _ _ _ _  _---|      | _---|    \ ` ' /
-      ]-I-I-I-I-[   ---|      |  ---|    |.   |
-       \ `   '_/       |     / \    |    | /^\|
-        [*]  __|       ^    / ^ \   ^    | |*||
-        |__   ,|      / \  /    `\ / \   | ===|
-     ___| ___ ,|__   /    /=_=_=_=\   \  |,  _|
-     I_I__I_I__I_I  (====(_________)___|_|____|____
-     \-\--|-|--/-/  |     I  [ ]__I I_I__|____I_I_|
-      |[]      '|   | []  |`__  . [  \-\--|-|--/-/
-      |.   | |' |___|_____I___|___I___|---------|
-     / \| []   .|_|-|_|-|-|_|-|_|-|_|-| []   [] |
-    <===>  |   .|-=-=-=-=-=-=-=-=-=-=-|   |    / \
-    ] []|`   [] ||.|.|.|.|.|.|.|.|.|.||-      <===>
-    ] []| ` |   |/////////\\\\\\\\\\.||__.  | |[] [
-    <===>     ' ||||| |   |   | ||||.||  []   <===>
-     \T/  | |-- ||||| | O | O | ||||.|| . |'   \T/
-      |      . _||||| |   |   | ||||.|| |     | |
-   ../|' v . | .|||||/____|____\|||| /|. . | . ./
-    |//\............/...........\........../../\\\
-
-        A magnificant sight....!''',
-        "choices": [
-            {
-                "scene": 0,
-                "description": "Head back to the amazing scene"
-            },
-            {
-                "scene": 2,
-                "description": "Return to the village for BATTLE!"
-            }
-        ]
-    },
-    {
-        "name": "some battle",
-        "type": SCENE_TYPE_BATTLE,
-        "description": """Arrive at the BATTLE SCENE!""",
-        "boss": "Galgamore",
-        "weapon": "throws skary snakes",
-        "health": 5,
-        "damage": 1,
-        "choices": [
-            {
-                "scene": 0,
-                "description": "Head back to the amazing scene"
-            }
-        ]
-    }
-]
-
 global game
 game = {
     "scene": None,
     "score": 0,
     "health": 100,
     "inventory": [
-        INVENTORY_POTION,
-        INVENTORY_SWORD
+        i.INVENTORY_POTION,
+        i.INVENTORY_SWORD
     ],
     "finished": False,
 }
@@ -207,7 +117,7 @@ def do_menu_action(action):
 
 def load_scene(scene):
     """Loads a scene by id into the current game scene."""
-    game['scene'] = scenes[scene]
+    game['scene'] = s.scenes[scene]
 
 
 def is_finished():
@@ -217,7 +127,7 @@ def is_finished():
 
 def scene_is_battle(scene):
     """Detect if current scene is a battle."""
-    return scene['type'] is SCENE_TYPE_BATTLE
+    return scene['type'] is s.SCENE_TYPE_BATTLE
 
 
 def start_game():
@@ -234,6 +144,9 @@ def start_game():
 
 def load_game():
     """Load a game from file."""
+    print('ERROR: loading a game not currently supported')
+    return
+
     file_name = raw_input("Enter file to open: ")
     print("Reading game from file {0}".format(file_name))
     with open(file_name, 'r') as f:
@@ -243,6 +156,9 @@ def load_game():
 
 def save_game():
     """Save a game from file."""
+    print('ERROR: saving a game not currently supported')
+    return
+
     file_name = raw_input("Filename: ")
     print("Saving game to file {0}".format(file_name))
     with open(file_name, 'w') as f:
@@ -252,6 +168,10 @@ def save_game():
 def die():
     """You dead!"""
     game['health'] = 0
+    game['finished'] = True
+
+def win():
+    """You have won!!!"""
     game['finished'] = True
 
 
@@ -358,7 +278,7 @@ def battle():
 def display_scene():
     """Display a scene."""
     scene = game['scene']
-    print(banner('\n\nYou make your way to {0} ...\n'.format(scene['name'])))
+    print("\n" + banner('You make your way to {0} ...'.format(scene['name'])) + "\n")
 
     if scene_is_battle(scene):
         load_scene(battle())
@@ -391,8 +311,10 @@ start_game()
 
 # 2. Display scene
 while True:
-    if is_finished is True:
+    if is_finished is True and am_i_dead:
         print("Game Over!")
         exit(0)
-
-    display_scene()
+    elif is_finished is True:
+        win()
+    else:
+      display_scene()
