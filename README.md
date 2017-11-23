@@ -2,6 +2,7 @@
 
 Text-based RPG game mini-framework
 
+Runnable at: https://trinket.io/library/trinkets/65decfffda
 
 ## Game Design \ Rules
 

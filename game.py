@@ -25,14 +25,26 @@ def banner(text, ch='=', length=78):
     return banner
 
 
-title = "Stray realms, the final hour"
+title = '''
+   _____ __                                      __
+  / ___// /__________ ___  __   ________  ____ _/ /___ ___  _____
+  \__ \/ __/ ___/ __ `/ / / /  / ___/ _ \/ __ `/ / __ `__ \/ ___/
+ ___/ / /_/ /  / /_/ / /_/ /  / /  /  __/ /_/ / / / / / / (__  )
+/____/\__/_/   \__,_/\__, /  /_/   \___/\__,_/_/_/ /_/ /_/____( )
+                    /____/                                    |/
+   __  __            _____             __   __
+  / /_/ /_  ___     / __(_)___  ____ _/ /  / /_  ____  __  _______
+ / __/ __ \/ _ \   / /_/ / __ \/ __ `/ /  / __ \/ __ \/ / / / ___/
+/ /_/ / / /  __/  / __/ / / / / /_/ / /  / / / / /_/ / /_/ / /
+\__/_/ /_/\___/  /_/ /_/_/ /_/\__,_/_/  /_/ /_/\____/\__,_/_/
+
+'''
 authors = "Skary Sneks"
 
 # Pick font from: http://www.figlet.org/examples.html
 print('')
 print('')
 print('Welcome to:')
-#print(figlet_format(title, font='slant'))
 print (title)
 print(banner('by: {0}, 2017'.format(authors)))
 print('')
