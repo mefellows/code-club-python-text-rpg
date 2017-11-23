@@ -20,3 +20,11 @@ INVENTORY_SWORD = {
     "health": 0,
     "use": INFINITY
 }
+
+INVENTORY_KEY = {
+    "id": 2,
+    "name": "Skeleton key",
+    "damage": 0,
+    "health": 0,
+    "use": INFINITY
+}

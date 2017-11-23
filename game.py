@@ -5,9 +5,11 @@ import signal
 import sys
 import scenes as s
 import inventory as i
-import os 
+import os
 
-clear = lambda: os.system('cls')
+
+def clear(): return os.system('cls')
+
 
 def signal_handler(signal, frame):
     """Handle a control-c."""
@@ -88,13 +90,19 @@ def help():
     ''')
 
 
+def print_inventory_item(item):
+    """Prints a formatted individual inventory item."""
+    print('{0}: (id: {1})'.format(item['name'], item['id']))
+    print("\tRemaining use: {0}".format(item['use']))
+    print("\tDamage: {0}".format(item['damage']))
+    print("\tHealth: {0}".format(item['health']))
+
+
 def print_inventory():
+    """Prints a formatted list of inventory items."""
     print(banner('inventory: '))
     for i in game['inventory']:
-        print('{0}: (id: {1})'.format(i['name'], i['id']))
-        print("\tRemaining use: {0}".format(i['use']))
-        print("\tDamage: {0}".format(i['damage']))
-        print("\tHealth: {0}".format(i['health']))
+        print_inventory_item(i)
     print('\n')
 
 
@@ -128,6 +136,11 @@ def is_finished():
 def scene_is_battle(scene):
     """Detect if current scene is a battle."""
     return scene['type'] is s.SCENE_TYPE_BATTLE
+
+
+def scene_is_inventory(scene):
+    """Detect if current scene is an Inventory scene to collect an item."""
+    return scene['type'] is s.SCENE_TYPE_INVENTORY
 
 
 def start_game():
@@ -170,6 +183,7 @@ def die():
     game['health'] = 0
     game['finished'] = True
 
+
 def win():
     """You have won!!!"""
     game['finished'] = True
@@ -210,6 +224,19 @@ def am_i_dead():
 def game_over(reason='You are dead'):
     """Game over!"""
     print("{0} - GAME OVER!".format(reason))
+
+
+def inventory():
+    """Collect inventory."""
+    scene = game['scene']
+    item = scene['item']
+
+    print('You have collected a new item: ')
+    print_inventory_item(item)
+    game['inventory'].append(item)
+
+    # Go to default choice
+    return game['scene']['choices'][0]['scene']
 
 
 def battle():
@@ -278,10 +305,13 @@ def battle():
 def display_scene():
     """Display a scene."""
     scene = game['scene']
-    print("\n" + banner('You make your way to {0} ...'.format(scene['name'])) + "\n")
+    print(
+        "\n" + banner('You make your way to {0} ...'.format(scene['name'])) + "\n")
 
     if scene_is_battle(scene):
         load_scene(battle())
+    elif scene_is_inventory(scene):
+        load_scene(inventory())
     else:
         print(scene['description'] + '\n\n')
         answered = False
@@ -317,4 +347,4 @@ while True:
     elif is_finished is True:
         win()
     else:
-      display_scene()
+        display_scene()
